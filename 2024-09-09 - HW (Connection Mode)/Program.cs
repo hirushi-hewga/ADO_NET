@@ -10,22 +10,26 @@ namespace _2024_09_09___HW__Connection_Mode_
     {
         public static void Reader(SqlConnection sqlConnection, string cmdText)
         {
-            SqlCommand command1 = new SqlCommand(cmdText, sqlConnection);
-            SqlDataReader reader1 = command1.ExecuteReader();
-            for (int i = 0; i < reader1.FieldCount; i++)
+            Console.WriteLine();
+            SqlCommand command = new SqlCommand(cmdText, sqlConnection);
+            SqlDataReader reader = command.ExecuteReader();
+            for (int i = 0; i < reader.FieldCount; i++)
             {
-                Console.Write($" {reader1.GetName(i),14}");
+                Console.Write($" {reader.GetName(i),17}");
             }
-            Console.WriteLine("\n-----------------------------------------------------------------------------------------------");
-            while (reader1.Read())
+            Console.WriteLine();
+            for (int i = 0; i < reader.FieldCount * 20; i++) Console.Write('-');
+            Console.WriteLine();
+            while (reader.Read())
             {
-                for (int i = 0; i < reader1.FieldCount; i++)
+                for (int i = 0; i < reader.FieldCount; i++)
                 {
-                    Console.Write($" {reader1[i],14} ");
+                    Console.Write($" {reader[i],17} ");
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine("-----------------------------------------------------------------------------------------------\n");
+            for (int i = 0; i < reader.FieldCount * 20; i++) Console.Write('-');
+            Console.WriteLine("\n");
         }
         static void Main(string[] args)
         {
@@ -203,6 +207,70 @@ namespace _2024_09_09___HW__Connection_Mode_
 
 
 
+            #region 1
+
+            /*
+            Reader(sqlConnection, @"select * from Buyers");
+            */
+
+            #endregion
+
+            #region 2
+
+            /*
+            Reader(sqlConnection, @"select * from Sellers");
+            */
+
+            #endregion
+
+            #region 3
+
+            /*
+            Console.Write("Enter seller Name : ");
+            string SellerName = Console.ReadLine();
+            Console.Write("Enter seller Surname : ");
+            string SellerSurname = Console.ReadLine();
+            Reader(sqlConnection, @$"select slrs.Name + ' ' + slrs.Surname as 'Seller Fullname', sls.SellerId as 'Seller Id', sls.BuyerId as 'Buyer Id', sls.Id as 'Sale Id', sls.AmountOfSale as 'Amount of Sale', sls.DateOfSale as 'Date of Sale' from Sales as sls join Sellers as slrs on slrs.Id = sls.SellerId where slrs.Name = '{SellerName}' and slrs.Surname = '{SellerSurname}'");
+            */
+
+            #endregion
+
+            #region 4
+
+            /*
+            Console.Write("Enter sale Amount : ");
+            int AmountOfSale = int.Parse(Console.ReadLine());
+            Reader(sqlConnection, @$"select s.Id as 'Sale Id', s.AmountOfSale as 'Amount of Sale', s.DateOfSale as 'Date of Sale' from Sales as s where s.AmountOfSale > {AmountOfSale}");
+            */
+
+            #endregion
+
+            #region 5
+
+            /*
+            Console.Write("Enter buyer Name : ");
+            string BuyerName = Console.ReadLine();
+            Console.Write("Enter buyer Surname : ");
+            string BuyerSurname = Console.ReadLine();
+            Reader(sqlConnection, @$"select top 1 b.Name + ' ' + b.Surname as 'Buyer Fullname', s.AmountOfSale as 'Amount of Sale', s.DateOfSale as 'Date of Sale' from Buyers as b join Sales as s on s.BuyerId = b.Id where b.Name = '{BuyerName}' and b.Surname = '{BuyerSurname}' order by s.AmountOfSale desc");
+            sqlConnection.Close(); sqlConnection.Open();
+            Reader(sqlConnection, @$"select top 1 b.Name + ' ' + b.Surname as 'Buyer Fullname', s.AmountOfSale as 'Amount of Sale', s.DateOfSale as 'Date of Sale' from Buyers as b join Sales as s on s.BuyerId = b.Id where b.Name = '{BuyerName}' and b.Surname = '{BuyerSurname}' order by s.AmountOfSale");
+            */
+
+            #endregion
+
+            #region 6
+
+            /**/
+            Console.Write("Enter seller Name : ");
+            string SellerName = Console.ReadLine();
+            Console.Write("Enter seller Surname : ");
+            string SellerSurname = Console.ReadLine();
+            Reader(sqlConnection, @$"select top 1 slrs.Name + ' ' + slrs.Surname as 'Seller Fullname', sls.AmountOfSale as 'Amount of Sale', sls.DateOfSale as 'Date of Sale' from Sales as sls join Sellers as slrs on slrs.Id = sls.SellerId where slrs.Name = '{SellerName}' and slrs.Surname = '{SellerSurname}' order by sls.Id");
+
+
+            #endregion
+
 
             //Reader(sqlConnection, @"select * from Buyers");
             //sqlConnection.Close();
@@ -215,20 +283,6 @@ namespace _2024_09_09___HW__Connection_Mode_
 
             //sqlConnection.Open();
             //Reader(sqlConnection, @"select * from Sales");
-
-
-            SqlCommand truncate1 = new SqlCommand(@"truncate table Buyers", sqlConnection);
-            truncate1.ExecuteNonQuery();
-
-            sqlConnection.Close(); sqlConnection.Open();
-
-            SqlCommand truncate2 = new SqlCommand(@"truncate table Sellers", sqlConnection);
-            truncate2.ExecuteNonQuery();
-
-            sqlConnection.Close(); sqlConnection.Open();
-
-            SqlCommand truncate3 = new SqlCommand(@"truncate table Sales", sqlConnection);
-            truncate3.ExecuteNonQuery();
 
 
             sqlConnection.Close();
