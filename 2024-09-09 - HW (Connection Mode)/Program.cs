@@ -261,28 +261,17 @@ namespace _2024_09_09___HW__Connection_Mode_
 
             #region 6
 
-            /**/
+            /*
             Console.Write("Enter seller Name : ");
             string SellerName = Console.ReadLine();
             Console.Write("Enter seller Surname : ");
             string SellerSurname = Console.ReadLine();
             Reader(sqlConnection, @$"select top 1 slrs.Name + ' ' + slrs.Surname as 'Seller Fullname', sls.AmountOfSale as 'Amount of Sale', sls.DateOfSale as 'Date of Sale' from Sales as sls join Sellers as slrs on slrs.Id = sls.SellerId where slrs.Name = '{SellerName}' and slrs.Surname = '{SellerSurname}' order by sls.Id");
-
+            */
 
             #endregion
 
 
-            //Reader(sqlConnection, @"select * from Buyers");
-            //sqlConnection.Close();
-
-
-            //sqlConnection.Open();
-            //Reader(sqlConnection, @"select * from Sellers");
-            //sqlConnection.Close();
-
-
-            //sqlConnection.Open();
-            //Reader(sqlConnection, @"select * from Sales");
 
 
             sqlConnection.Close();
