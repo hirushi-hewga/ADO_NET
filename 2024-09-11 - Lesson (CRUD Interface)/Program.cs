@@ -1,5 +1,7 @@
 ﻿using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Text;
+using System.Xml.Linq;
 
 namespace _2024_09_11___Lesson__CRUD_Interface_
 {
@@ -22,10 +24,15 @@ namespace _2024_09_11___Lesson__CRUD_Interface_
             conn.Close();
         }
 
-        public void Create(string name, string type, int quantity, int price, string producer, int costPrice)
+        public void Create(Product product)
         {
             string cmdText = $@"INSERT INTO Products
-                              VALUES ('{name}', '{type}', {quantity}, {price}, '{producer}', {costPrice})";
+                              VALUES ('{product.Name}', 
+                                      '{product.Type}', 
+                                       {product.Quantity}, 
+                                       {product.CostPrice}, 
+                                      '{product.Producer}', 
+                                       {product.Price})";
 
             SqlCommand command = new SqlCommand(cmdText, conn);
             command.CommandTimeout = 5; // default - 30sec
@@ -60,13 +67,47 @@ namespace _2024_09_11___Lesson__CRUD_Interface_
             reader.Close();
             return products;
         }
-        public void Update()
+        public void Update(Product product)
         {
-
+            string cmdText = $@"update Products
+                                set Name = '{product.Name}',
+                                    TypeProduct = {product.Type},
+                                    Quantity = {product.Quantity},
+                                    CostPrice = {product.CostPrice},
+                                    Producer = {product.Producer},
+                                    Price = {product.Price}
+                                    where Id = {product.Id}";
         }
-        public void Delete()
+        public Product GetById(int id)
         {
+            string cmdText = $@"select * from Products where Id = {id}";
 
+            SqlCommand command = new SqlCommand(cmdText, conn);
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            Product product = new Product();
+
+            while (reader.Read())
+            {
+                product.Id = (int)reader[0];
+                product.Name = (string)reader[1];
+                product.Type = (string)reader[2];
+                product.Quantity = (int)reader[3];
+                product.CostPrice = (int)reader[4];
+                product.Producer = (string)reader[5];
+                product.Price = (int)reader[6];
+            }
+            reader.Close();
+            return product;
+        }
+        public void Delete(int id)
+        {
+            string cmdText = $@"delete Products where Id = {id}";
+
+            SqlCommand command = new SqlCommand(cmdText, conn);
+
+            command.ExecuteNonQuery();
         }
     }
     internal class Program
@@ -80,12 +121,26 @@ namespace _2024_09_11___Lesson__CRUD_Interface_
                                         Connect Timeout=30;
                                         Encrypt=False;";
             SportShop sportShop = new SportShop(connectionString);
-            //sportShop.Create("Stanga","Equipment",10,3333,"China",5555);
+            Product pr = new Product()
+            {
+                Name = "Ball",
+                Type = "Equipment",
+                Quantity = 10,
+                CostPrice = 100,
+                Producer = "China",
+                Price = 200
+            };
+            //sportShop.Create(pr);
+            //sportShop.Delete();
             var products = sportShop.GetALL();
             foreach (var product in products)
             {
                 Console.WriteLine(product);
             }
+            var changeProduct = sportShop.GetById(2);
+            changeProduct.Price = 500;
+            changeProduct.CostPrice = 300;
+            sportShop.Update(changeProduct);
         }
     }
 }

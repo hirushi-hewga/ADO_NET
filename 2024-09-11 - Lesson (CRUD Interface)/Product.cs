@@ -15,5 +15,9 @@ namespace _2024_09_11___Lesson__CRUD_Interface_
         public int CostPrice { get; set; }
         public string Producer { get; set; }
         public int Price { get; set; }
+        public override string ToString()
+        {
+            return $"{Name, -15} {Type, -15} {CostPrice, 10} {Price, 10}";
+        }
     }
 }
