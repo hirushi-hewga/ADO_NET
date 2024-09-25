@@ -22,20 +22,16 @@ namespace _2024_09_11___Lesson__CRUD_Interface_
             conn.Close();
         }
 
-        public void Create()
+        public void Create(string name, string type, int quantity, int price, string producer, int costPrice)
         {
-            string cmdText = @"INSERT INTO Products
-                              VALUES ('FootballBall', 'Equipment', 14, 1500, 'Ukraine', 2000)";
+            string cmdText = $@"INSERT INTO Products
+                              VALUES ('{name}', '{type}', {quantity}, {price}, '{producer}', {costPrice})";
 
             SqlCommand command = new SqlCommand(cmdText, conn);
             command.CommandTimeout = 5; // default - 30sec
 
 
-            //// ExecuteNonQuery - виконує команду яка не повертає результат 
-            ///(insert, update, delete...),
-            ////але метод повертає кількітсь рядків, які були задіяні
             int rows = command.ExecuteNonQuery();
-
             Console.WriteLine(rows + " rows affected!");
         }
         public void GetALL()
@@ -62,6 +58,7 @@ namespace _2024_09_11___Lesson__CRUD_Interface_
                                         Connect Timeout=30;
                                         Encrypt=False;";
             SportShop sportShop = new SportShop(connectionString);
+            sportShop.Create("Stanga","Equipment",10,3333,"China",5555);
         }
     }
 }
