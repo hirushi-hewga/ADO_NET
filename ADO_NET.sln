@@ -5,7 +5,9 @@ VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2024-09-09 - Lesson (Connection Mode)", "2024-09-09 - Lesson (Connection Mode)\2024-09-09 - Lesson (Connection Mode).csproj", "{C8F79955-EE31-4218-A742-CA6C8AC13A2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2024-09-09 - HW (Connection Mode)", "2024-09-09 - HW (Connection Mode)\2024-09-09 - HW (Connection Mode).csproj", "{34555F09-DD37-44CA-A55C-C5858F289C59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2024-09-09 - HW (Connection Mode)", "2024-09-09 - HW (Connection Mode)\2024-09-09 - HW (Connection Mode).csproj", "{34555F09-DD37-44CA-A55C-C5858F289C59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2024-09-11 - Lesson (CRUD Interface)", "2024-09-11 - Lesson (CRUD Interface)\2024-09-11 - Lesson (CRUD Interface).csproj", "{078B6CCF-EC11-44EF-A7C1-5902BC568F12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{34555F09-DD37-44CA-A55C-C5858F289C59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34555F09-DD37-44CA-A55C-C5858F289C59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34555F09-DD37-44CA-A55C-C5858F289C59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{078B6CCF-EC11-44EF-A7C1-5902BC568F12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{078B6CCF-EC11-44EF-A7C1-5902BC568F12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{078B6CCF-EC11-44EF-A7C1-5902BC568F12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{078B6CCF-EC11-44EF-A7C1-5902BC568F12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
