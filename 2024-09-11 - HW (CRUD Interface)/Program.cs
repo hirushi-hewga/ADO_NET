@@ -220,7 +220,7 @@ namespace _2024_09_11___HW__CRUD_Interface_
                     case 4:
                         int choice_ = 0;
                         bool isValidData = true;
-                        while (choice_ < 1 && choice_ > 2)
+                        while (choice_ < 1 || choice_ > 2)
                         {
                             if (!isValidData)
                                 Console.WriteLine("Invalid choice!\n");
