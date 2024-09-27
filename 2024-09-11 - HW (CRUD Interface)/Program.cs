@@ -5,15 +5,15 @@ using System.Xml.Serialization;
 
 namespace _2024_09_11___HW__CRUD_Interface_
 {
-    class Sales
+    class SaleDb
     {
         SqlConnection conn;
-        public Sales(string connectionString)
+        public SaleDb(string connectionString)
         {
             conn = new SqlConnection(connectionString);
             conn.Open();
         }
-        ~Sales()
+        ~SaleDb()
         {
             conn.Close();
         }
@@ -47,7 +47,7 @@ namespace _2024_09_11___HW__CRUD_Interface_
                     Id = (int)reader[0],
                     BuyerId = (int)reader[1],
                     SellerId = (int)reader[2],
-                    AmountOfSale = (float)reader[3],
+                    AmountOfSale = (double)reader[3],
                     DateOfSale = (DateTime)reader[4]
                 });
             }
@@ -55,7 +55,7 @@ namespace _2024_09_11___HW__CRUD_Interface_
             reader.Close();
             return products;
         }
-        public Sale GetSale(string name, string surname)
+        public Sale GetLastSaleBySellerFullname(string name, string surname)
         {
             string cmdText = $@"select top 1 * from Sales as s
                                 join Buyers as b on b.Id = s.BuyerId
@@ -73,27 +73,37 @@ namespace _2024_09_11___HW__CRUD_Interface_
                 sale.Id = (int)reader[0];
                 sale.BuyerId = (int)reader[1];
                 sale.SellerId = (int)reader[2];
-                sale.AmountOfSale = (float)reader[3];
+                sale.AmountOfSale = (double)reader[3];
                 sale.DateOfSale = (DateTime)reader[4];
             }
 
             reader.Close();
             return sale;
         }
-        //public void Update(Sale sale)
-        //{
-        //    string cmdText = $@"update Sales
-        //                        set BuyerId = {sale.BuyerId},
-        //                            SellerId = {sale.SellerId},
-        //                            AmountOfSale = {sale.AmountOfSale},
-        //                            DateOfSale = '{sale.DateOfSale.ToShortDateString()}'
-        //                            where Id = {sale.Id}";
+        public Seller GetSeller()
 
-        //    SqlCommand command = new SqlCommand(cmdText, conn);
-        //    command.CommandTimeout = 5;
+        {
+            string cmdText = $@"select top 1 slrs.Id, slrs.Name, slrs.Surname
+                                from Sellers as slrs
+                                join Sales as sls on sls.SellerId = slrs.Id
+                                group by slrs.Id,slrs.Name,slrs.Surname
+                                order by sum(sls.AmountOfSale) desc";
 
-        //    command.ExecuteNonQuery();
-        //}
+            SqlCommand command = new SqlCommand(cmdText, conn);
+
+            SqlDataReader reader = command.ExecuteReader();
+            Seller seller = new Seller();
+
+            while (reader.Read())
+            {
+                seller.Id = (int)reader[0];
+                seller.Name = (string)reader[1];
+                seller.Surname = (string)reader[2];
+            }
+
+            reader.Close();
+            return seller;
+        }
         public Sale GetSaleById(int id)
         {
             string cmdText = $@"select * from Sales where Id = {id}";
@@ -109,7 +119,7 @@ namespace _2024_09_11___HW__CRUD_Interface_
                 sale.Id = (int)reader[0];
                 sale.BuyerId = (int)reader[1];
                 sale.SellerId = (int)reader[2];
-                sale.AmountOfSale = (float)reader[3];
+                sale.AmountOfSale = (double)reader[3];
                 sale.DateOfSale = (DateTime)reader[4];
             }
             reader.Close();
@@ -150,19 +160,21 @@ namespace _2024_09_11___HW__CRUD_Interface_
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
-            string connectionString = @"Data Source=WINDEV2401EVAL\SQLEXPRESS;
-                                        Initial Catalog=Sales;
-                                        Integrated Security=True;
-                                        Connect Timeout=30;
-                                        Encrypt=False;";
-            Sales sales = new Sales(connectionString);
+            //string connectionString = @"Data Source=WINDEV2401EVAL\SQLEXPRESS;
+            //                            Initial Catalog=Sales;
+            //                            Integrated Security=True;
+            //                            Connect Timeout=30;
+            //                            Encrypt=False;";
+            string connectionString = @"workstation id=WorkersDatabase2024-08-19.mssql.somee.com;packet size=4096;user id=Hirushi_SQLLogin_2;pwd=wvrcqrk394;data source=WorkersDatabase2024-08-19.mssql.somee.com;persist security info=False;initial catalog=WorkersDatabase2024-08-19;TrustServerCertificate=True";
+            SaleDb salesDb = new SaleDb(connectionString);
 
 
             int choice = 0;
             while (choice != 6)
             {
                 Console.Clear();
-                switch (Menu())
+                choice = Menu();
+                switch (choice)
                 {
                     case 1:
                         Console.Write("Enter Buyer Id : ");
@@ -186,22 +198,24 @@ namespace _2024_09_11___HW__CRUD_Interface_
                                                       MonthOfSale,
                                                       DayOfSale)
                         };
-                        sales.CreateSale(sale);
+                        salesDb.CreateSale(sale);
                         break;
                     case 2:
-                        var sales_ = sales.GetALLSales();
+                        var sales_ = salesDb.GetALLSales();
                         foreach (var item in sales_)
                         {
                             Console.WriteLine(item.ToString());
                         }
+                        Console.ReadKey();
                         break;
                     case 3:
                         Console.Write("Enter Buyer Name : ");
                         string BuyerName = Console.ReadLine();
                         Console.Write("Enter Buyer Surname : ");
                         string BuyerSurname = Console.ReadLine();
-                        Sale sale_ = sales.GetSale(BuyerName, BuyerSurname);
+                        Sale sale_ = salesDb.GetLastSaleBySellerFullname(BuyerName, BuyerSurname);
                         Console.Write(sale_.ToString());
+                        Console.ReadKey();
                         break;
                     case 4:
                         int choice_ = 0;
@@ -219,23 +233,21 @@ namespace _2024_09_11___HW__CRUD_Interface_
                             {
                                 Console.Write("Enter Buyer Id : ");
                                 int BuyerId_ = int.Parse(Console.ReadLine());
-                                sales.DeleteBuyer(BuyerId_);
+                                salesDb.DeleteBuyer(BuyerId_);
                             }
                             else if (choice_ == 2)
                             {
                                 Console.Write("Enter Seller Id : ");
-                                int SellerId_ = int.Parse(Console.ReadLine());
-                                sales.DeleteSeller(SellerId_);
+                                int SellerId_ = int.Parse(Console.ReadLine());  
+                                salesDb.DeleteSeller(SellerId_);
                             }
-                            else
-                            {
-                                isValidData = false;
-                                Console.Clear();
-                            }
+                            else isValidData = false;
                         }
                         break;
                     case 5:
-
+                        var seller = salesDb.GetSeller();
+                        Console.WriteLine(seller.ToString());
+                        Console.ReadKey();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
                         break;
                     case 6:
                         Console.WriteLine("Goodbye.");

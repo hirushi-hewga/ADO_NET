@@ -11,7 +11,7 @@ namespace _2024_09_11___HW__CRUD_Interface_
         public int Id { get; set; }
         public int BuyerId { get; set; }
         public int SellerId { get; set; }
-        public float AmountOfSale { get; set; }
+        public double AmountOfSale { get; set; }
         public DateTime DateOfSale { get; set; }
         public override string ToString()
         {
