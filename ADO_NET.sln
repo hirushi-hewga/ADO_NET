@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2024-09-13 - Lesson (SQL In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "data_access", "data_access\data_access.csproj", "{9C2E689D-C87B-430C-99CD-31719ACB3D25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf_Client", "Wpf_Client\Wpf_Client.csproj", "{924B9465-7DE0-43ED-9B09-027002C6F86E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPF_Client_", "WPF_Client_\WPF_Client_.csproj", "{8C484D07-452D-4A85-A8E0-387403A3D152}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +47,10 @@ Global
 		{9C2E689D-C87B-430C-99CD-31719ACB3D25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C2E689D-C87B-430C-99CD-31719ACB3D25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C2E689D-C87B-430C-99CD-31719ACB3D25}.Release|Any CPU.Build.0 = Release|Any CPU
-		{924B9465-7DE0-43ED-9B09-027002C6F86E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{924B9465-7DE0-43ED-9B09-027002C6F86E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{924B9465-7DE0-43ED-9B09-027002C6F86E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{924B9465-7DE0-43ED-9B09-027002C6F86E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C484D07-452D-4A85-A8E0-387403A3D152}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C484D07-452D-4A85-A8E0-387403A3D152}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C484D07-452D-4A85-A8E0-387403A3D152}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C484D07-452D-4A85-A8E0-387403A3D152}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

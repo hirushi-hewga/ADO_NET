@@ -1,4 +1,5 @@
 ﻿using _2024_09_11___Lesson__CRUD_Interface_;
+using System.Configuration;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,27 +11,26 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Wpf_Client
+namespace WPF_Client_
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        SportShop sportShop = null;
         public MainWindow()
         {
-            string connectionString = @"Data Source=WINDEV2401EVAL\SQLEXPRESS;
-                                        Initial Catalog=SportShop;
-                                        Integrated Security=True;
-                                        Connect Timeout=30;
-                                        Encrypt=False;";
+            string connectionString = ConfigurationManager
+                .ConnectionStrings["SportShopDbConnection"]
+                .ConnectionString;
             SportShop sportShop = new SportShop(connectionString);
             InitializeComponent();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            dataGrid.ItemsSourse = SportShop
+            dataGrid.ItemsSource = sportShop.GetALL();
         }
     }
 }
