@@ -30,17 +30,17 @@ namespace _2024_09_13___WPF_Client
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            dataGrid.ItemsSource = salesDb.GetALLBuyers();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
+            dataGrid.ItemsSource = salesDb.GetALLSellers();
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-
+            dataGrid.ItemsSource = salesDb.GetALLSales();
         }
     }
 }
