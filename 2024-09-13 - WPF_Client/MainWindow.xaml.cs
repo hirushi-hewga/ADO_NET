@@ -1,4 +1,4 @@
-﻿using _2024_09_11___Lesson__CRUD_Interface_;
+﻿using _2024_09_13___Sales;
 using System.Configuration;
 using System.Text;
 using System.Windows;
@@ -11,26 +11,36 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WPF_Client_
+namespace _2024_09_13___WPF_Client
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        SportShop sportShop = null;
+        SalesDb salesDb = null;
         public MainWindow()
         {
             InitializeComponent();
             string connectionString = ConfigurationManager
                 .ConnectionStrings["SportShopDbConnection"]
                 .ConnectionString;
-            sportShop = new SportShop(connectionString);
+            salesDb = new SalesDb(connectionString);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            dataGrid.ItemsSource = sportShop.GetALL();
+
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
